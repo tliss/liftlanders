@@ -18,8 +18,8 @@ public class BaseActor extends Actor
     private Animation<TextureRegion> animation;
     private float elapsedTime;
     private boolean animationPaused;
-    private Vector2 velocityVec;
-    private Vector2 accelerationVec;
+    protected Vector2 velocityVec;
+    protected Vector2 accelerationVec;
     private float acceleration;
     private float maxSpeed;
     private float deceleration;
@@ -73,12 +73,20 @@ public class BaseActor extends Actor
         // apply color tint effect
         Color c = getColor();
         batch.setColor(c.r, c.g, c.b, c.a);
+        boolean frameFlipped = false;
 
         if (animation != null && isVisible()) {
+            if (leftFacing()){
+                animation.getKeyFrame(elapsedTime).flip(true, false);
+                frameFlipped = true;
+            }
             batch.draw(animation.getKeyFrame(elapsedTime),
                     getX(), getY(), getOriginX(), getOriginY(),
                     getWidth(), getHeight(), getScaleX(), getScaleY(), getRotation()
             );
+            if (frameFlipped){
+                animation.getKeyFrame(elapsedTime).flip(true, false);
+            }
         }
     }
 
@@ -267,5 +275,13 @@ public class BaseActor extends Actor
         boundaryPolygon.setRotation(getRotation());
         boundaryPolygon.setScale(getScaleX(), getScaleY());
         return boundaryPolygon;
+    }
+
+    public boolean leftFacing(){
+        if (getMotionAngle() > 90 && getMotionAngle() < 270){
+            return true;
+        } else {
+            return false;
+        }
     }
 }

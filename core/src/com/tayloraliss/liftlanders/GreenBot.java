@@ -34,5 +34,4 @@ public class GreenBot extends BaseActor {
 
         setAnimationPaused( !isMoving() );
     }
-
 }
