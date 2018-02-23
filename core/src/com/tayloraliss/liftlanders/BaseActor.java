@@ -24,6 +24,7 @@ public class BaseActor extends Actor
     private float maxSpeed;
     private float deceleration;
     private Polygon boundaryPolygon;
+    private boolean leftFacing;
 
     public BaseActor(float x, float y, Stage s)
     {
@@ -40,6 +41,7 @@ public class BaseActor extends Actor
         acceleration = 0;
         maxSpeed = 1000;
         deceleration = 0;
+        leftFacing = false;
     }
 
     public void setAnimation(Animation<TextureRegion> anim){
@@ -76,7 +78,8 @@ public class BaseActor extends Actor
         boolean frameFlipped = false;
 
         if (animation != null && isVisible()) {
-            if (leftFacing()){
+            setleftFacing();
+            if (getLeftFacing()){
                 animation.getKeyFrame(elapsedTime).flip(true, false);
                 frameFlipped = true;
             }
@@ -277,11 +280,16 @@ public class BaseActor extends Actor
         return boundaryPolygon;
     }
 
-    public boolean leftFacing(){
-        if (getMotionAngle() > 90 && getMotionAngle() < 270){
-            return true;
+    public void setleftFacing(){
+        if ((getMotionAngle() > 90 && getMotionAngle() < 270) ||
+                (getMotionAngle() == 0 && getSpeed() ==0 && leftFacing)) {
+            leftFacing = true;
         } else {
-            return false;
+            leftFacing = false;
         }
+    }
+
+    public boolean getLeftFacing(){
+        return leftFacing;
     }
 }
