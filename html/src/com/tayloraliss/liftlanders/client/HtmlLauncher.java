@@ -3,7 +3,7 @@ package com.tayloraliss.liftlanders.client;
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.backends.gwt.GwtApplication;
 import com.badlogic.gdx.backends.gwt.GwtApplicationConfiguration;
-import com.tayloraliss.liftlanders.LiftLandersGame;
+import com.tayloraliss.liftlanders.LiftLanders;
 
 public class HtmlLauncher extends GwtApplication {
 
@@ -46,6 +46,6 @@ public class HtmlLauncher extends GwtApplication {
 
         @Override
         public ApplicationListener createApplicationListener () {
-                return new LiftLandersGame();
+                return new LiftLanders();
         }
 }
