@@ -113,7 +113,7 @@ public class BaseActor extends Actor
     }
 
     // For creating an animation from a single spritesheet
-    public Animation<TextureRegion> loadAnimationFromSheet(String fileName, int rows, int cols, float frameDuration, boolean loop){
+    public Animation<TextureRegion> loadAnimationFromSheet(String fileName, int rows, int cols, float frameDuration, boolean loop, boolean pingPong, int startFrame, int endFrame){
         Texture texture = new Texture(Gdx.files.internal(fileName), true);
         texture.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
         int frameWidth = texture.getWidth() / cols;
@@ -129,10 +129,24 @@ public class BaseActor extends Actor
             }
         }
 
+        System.out.println(textureArray.size);
+
+        if (endFrame < textureArray.size){
+            textureArray.removeRange(endFrame+1, textureArray.size-1);
+        }
+
+        if (startFrame > 0) {
+            textureArray.removeRange(0, startFrame-1);
+        }
+
+        System.out.println(textureArray.size);
+
         Animation<TextureRegion> anim = new Animation<TextureRegion>(frameDuration, textureArray);
 
         if (loop){
             anim.setPlayMode(Animation.PlayMode.LOOP);
+        } else if (pingPong) {
+            anim.setPlayMode(Animation.PlayMode.LOOP_PINGPONG);
         } else {
             anim.setPlayMode(Animation.PlayMode.NORMAL);
         }
