@@ -4,6 +4,8 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 
+import static java.lang.Math.abs;
+
 public class GreenBot extends BaseActor {
 
     public GreenBot(float x, float y, Stage s)
@@ -12,7 +14,7 @@ public class GreenBot extends BaseActor {
         loadAnimationFromSheet("greenbot.png", 4, 7, 0.1f, false, true, 9, 12);
         setScale(2, 2);
 
-        setAcceleration(400);
+        setAcceleration(1000);
         setMaxSpeed(100);
         setDeceleration(400);
     }
@@ -23,18 +25,27 @@ public class GreenBot extends BaseActor {
 
         if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
             accelerateAtAngle(180);
-            setScaleX(-2);
+//            setScaleX(-2);
+            System.out.println("LEFT");
         }
         if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
             accelerateAtAngle(0);
             setScaleX(2);
-        }
-        if (Gdx.input.isKeyPressed(Input.Keys.UP))
-            accelerateAtAngle(90);
-        if (Gdx.input.isKeyPressed(Input.Keys.DOWN))
-            accelerateAtAngle(270);
+            System.out.println("RIGHT");
 
-        accelerationVec.add(0, -gravity);
+        }
+        if (Gdx.input.isKeyPressed(Input.Keys.UP)) {
+            accelerateAtAngle(90);
+            System.out.println("UP");
+        }
+
+        if (Gdx.input.isKeyPressed(Input.Keys.DOWN)) {
+            accelerateAtAngle(270);
+            System.out.println("DOWN");
+        }
+
+
+//        accelerationVec.add(0, -gravity);
 
         applyPhysics(dt);
 

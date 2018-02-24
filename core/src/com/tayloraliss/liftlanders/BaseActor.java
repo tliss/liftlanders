@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Vector2;
@@ -77,16 +78,12 @@ public class BaseActor extends Actor
         // apply color tint effect
         Color c = getColor();
         batch.setColor(c.r, c.g, c.b, c.a);
-        boolean frameFlipped = false;
 
         if (animation != null && isVisible()) {
             batch.draw(animation.getKeyFrame(elapsedTime),
                     getX(), getY(), getOriginX(), getOriginY(),
                     getWidth(), getHeight(), getScaleX(), getScaleY(), getRotation()
             );
-            if (frameFlipped){
-                animation.getKeyFrame(elapsedTime).flip(true, false);
-            }
         }
     }
 
@@ -276,4 +273,52 @@ public class BaseActor extends Actor
         boundaryPolygon.setScale(getScaleX(), getScaleY());
         return boundaryPolygon;
     }
+
+    public boolean overlaps(BaseActor other){
+        Polygon poly1 = this.getBoundaryPolygon();
+        Polygon poly2 = other.getBoundaryPolygon();
+
+        //initial test to improve performance (checks if rectangles intersect)
+        if (!poly1.getBoundingRectangle().overlaps(poly2.getBoundingRectangle())){
+            return false;
+        }
+        //Check if polygons intersect (more memory-intensive)
+        return Intersector.overlapConvexPolygons(poly1, poly2);
+    }
+
+    public void centerAtPosition(float x, float y){
+        setPosition(x - getWidth()/2, y - getHeight()/2);
+    }
+
+    public void centerAtActor(BaseActor other){
+        centerAtPosition(other.getX() + other.getWidth()/2,
+                other.getY() + other.getHeight()/2);
+    }
+
+    public void setOpacity(float opacity){
+        this.getColor().a = opacity;
+    }
+
+    public Vector2 preventOverlap(BaseActor other){
+        Polygon poly1 = this.getBoundaryPolygon();
+        Polygon poly2 = other.getBoundaryPolygon();
+
+        // initial test to improve performance
+        if (!poly1.getBoundingRectangle().overlaps(poly2.getBoundingRectangle())) {
+            return null;
+        }
+
+        Intersector.MinimumTranslationVector mtv = new Intersector.MinimumTranslationVector();
+        boolean polygonOverlap = Intersector.overlapConvexPolygons(poly1, poly2, mtv);
+
+        if (!polygonOverlap){
+            return null;
+        }
+
+        System.out.println("MOVE " + mtv.normal.x * mtv.depth + " | " + mtv.normal.y * mtv.depth);
+
+        this.moveBy(mtv.normal.x * mtv.depth, mtv.normal.y * mtv.depth);
+        return mtv.normal;
+    }
 }
+

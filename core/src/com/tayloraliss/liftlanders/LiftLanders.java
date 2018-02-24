@@ -10,15 +10,17 @@ public class LiftLanders extends GameBeta {
 
 	// Declare actors here
 	private GreenBot greenbot;
+	private Platform platform;
 
 	public void initialize(){
 		// Initialize actors here
-		greenbot = new GreenBot(300, 300, mainStage);
-
+		greenbot = new GreenBot(340, 600, mainStage);
+		platform = new Platform(0, 0, mainStage);
+		platform.centerAtPosition(Gdx.graphics.getWidth()/2,Gdx.graphics.getHeight()/2);
 	}
 
 	public void update(float dt){
-
+		greenbot.preventOverlap(platform);
 
 	}
 

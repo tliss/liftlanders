@@ -78,7 +78,7 @@ task run(type: Exec) {
         path = "$System.env.ANDROID_HOME"
     }
 
-    def adb = path + "/platform-tools/adb"
+    def adb = path + "/Platform-tools/adb"
     commandLine "$adb", 'shell', 'am', 'start', '-n', 'com.tayloraliss.liftlanders/com.tayloraliss.liftlanders.AndroidLauncher'
 }
 
