@@ -34,6 +34,8 @@ public class GreenBot extends BaseActor {
         if (Gdx.input.isKeyPressed(Input.Keys.DOWN))
             accelerateAtAngle(270);
 
+        accelerationVec.add(0, -gravity);
+
         applyPhysics(dt);
 
         setAnimationPaused( !isMoving() );

@@ -25,6 +25,7 @@ public class BaseActor extends Actor
     private float deceleration;
     private Polygon boundaryPolygon;
     private boolean leftFacing;
+    protected int gravity;
 
     public BaseActor(float x, float y, Stage s)
     {
@@ -42,6 +43,7 @@ public class BaseActor extends Actor
         maxSpeed = 1000;
         deceleration = 0;
         leftFacing = false;
+        gravity = 700;
     }
 
     public void setAnimation(Animation<TextureRegion> anim){
