@@ -78,11 +78,6 @@ public class BaseActor extends Actor
         boolean frameFlipped = false;
 
         if (animation != null && isVisible()) {
-            setleftFacing();
-            if (getLeftFacing()){
-                animation.getKeyFrame(elapsedTime).flip(true, false);
-                frameFlipped = true;
-            }
             batch.draw(animation.getKeyFrame(elapsedTime),
                     getX(), getY(), getOriginX(), getOriginY(),
                     getWidth(), getHeight(), getScaleX(), getScaleY(), getRotation()
@@ -278,18 +273,5 @@ public class BaseActor extends Actor
         boundaryPolygon.setRotation(getRotation());
         boundaryPolygon.setScale(getScaleX(), getScaleY());
         return boundaryPolygon;
-    }
-
-    public void setleftFacing(){
-        if ((getMotionAngle() > 90 && getMotionAngle() < 270) ||
-                (getMotionAngle() == 0 && getSpeed() ==0 && leftFacing)) {
-            leftFacing = true;
-        } else {
-            leftFacing = false;
-        }
-    }
-
-    public boolean getLeftFacing(){
-        return leftFacing;
     }
 }
