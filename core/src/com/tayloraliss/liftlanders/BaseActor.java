@@ -15,6 +15,8 @@ import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.Array;
 
+import java.util.ArrayList;
+
 import static java.lang.Math.abs;
 
 public class BaseActor extends Actor
@@ -338,5 +340,27 @@ public class BaseActor extends Actor
         this.moveBy(mtv.normal.x * mtv.depth, mtv.normal.y * mtv.depth);
         return mtv.normal;
     }
+
+    public static ArrayList<BaseActor> getList(Stage stage, String className){
+        ArrayList<BaseActor> list = new ArrayList<BaseActor>();
+        Class theClass = null;
+        try
+        {  theClass = Class.forName("com.tayloraliss.liftlanders." + className);  }
+        catch (Exception error)
+        {  error.printStackTrace();  }
+
+        for (Actor a : stage.getActors())
+        {
+            if ( theClass.isInstance( a ) )
+                list.add( (BaseActor)a );
+        }
+        return list;
+    }
+
+    public static int count(Stage stage, String className)
+    {
+        return getList(stage, className).size();
+    }
+
 }
 
