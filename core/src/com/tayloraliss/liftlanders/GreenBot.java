@@ -25,27 +25,23 @@ public class GreenBot extends BaseActor {
 
         if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
             accelerateAtAngle(180);
-//            setScaleX(-2);
-            System.out.println("LEFT");
+            setScaleX(-2);
         }
         if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
             accelerateAtAngle(0);
             setScaleX(2);
-            System.out.println("RIGHT");
 
         }
         if (Gdx.input.isKeyPressed(Input.Keys.UP)) {
             accelerateAtAngle(90);
-            System.out.println("UP");
         }
 
         if (Gdx.input.isKeyPressed(Input.Keys.DOWN)) {
             accelerateAtAngle(270);
-            System.out.println("DOWN");
         }
 
 
-//        accelerationVec.add(0, -gravity);
+        accelerationVec.add(0, -gravity);
 
         applyPhysics(dt);
 

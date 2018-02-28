@@ -11,8 +11,11 @@ import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.Array;
+
+import static java.lang.Math.abs;
 
 public class BaseActor extends Actor
 {
@@ -27,6 +30,25 @@ public class BaseActor extends Actor
     private Polygon boundaryPolygon;
     private boolean leftFacing;
     protected int gravity;
+
+    public BaseActor(float x, float y, Group g)
+    {
+        // call constructor from Actor class
+        super();
+        // perform additional initialization tasks
+        setPosition(x,y);
+        g.addActor(this);
+        animation = null;
+        elapsedTime = 0;
+        animationPaused = false;
+        velocityVec = new Vector2(0,0);
+        accelerationVec = new Vector2(0, 0);
+        acceleration = 0;
+        maxSpeed = 1000;
+        deceleration = 0;
+        leftFacing = false;
+        gravity = 700;
+    }
 
     public BaseActor(float x, float y, Stage s)
     {
@@ -46,6 +68,8 @@ public class BaseActor extends Actor
         leftFacing = false;
         gravity = 700;
     }
+
+
 
     public void setAnimation(Animation<TextureRegion> anim){
         animation = anim;
@@ -134,8 +158,6 @@ public class BaseActor extends Actor
             }
         }
 
-        System.out.println(textureArray.size);
-
         if (endFrame < textureArray.size){
             textureArray.removeRange(endFrame+1, textureArray.size-1);
         }
@@ -143,8 +165,6 @@ public class BaseActor extends Actor
         if (startFrame > 0) {
             textureArray.removeRange(0, startFrame-1);
         }
-
-        System.out.println(textureArray.size);
 
         Animation<TextureRegion> anim = new Animation<TextureRegion>(frameDuration, textureArray);
 
@@ -270,7 +290,7 @@ public class BaseActor extends Actor
         boundaryPolygon.setPosition(getX(), getY());
         boundaryPolygon.setOrigin(getOriginX(), getOriginY());
         boundaryPolygon.setRotation(getRotation());
-        boundaryPolygon.setScale(getScaleX(), getScaleY());
+        boundaryPolygon.setScale(abs(getScaleX()), abs(getScaleY()));
         return boundaryPolygon;
     }
 
@@ -314,8 +334,6 @@ public class BaseActor extends Actor
         if (!polygonOverlap){
             return null;
         }
-
-        System.out.println("MOVE " + mtv.normal.x * mtv.depth + " | " + mtv.normal.y * mtv.depth);
 
         this.moveBy(mtv.normal.x * mtv.depth, mtv.normal.y * mtv.depth);
         return mtv.normal;

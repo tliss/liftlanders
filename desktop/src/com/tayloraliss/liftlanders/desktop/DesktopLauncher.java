@@ -7,7 +7,7 @@ import com.tayloraliss.liftlanders.LiftLanders;
 public class DesktopLauncher {
 	public static void main (String[] arg) {
 		Game myGame = new LiftLanders();
-		LwjglApplication launcher = new LwjglApplication(myGame, "Lift Landers", 800, 600);
+		LwjglApplication launcher = new LwjglApplication(myGame, "Lift Landers", 1274, 600);
 
 	}
 }
