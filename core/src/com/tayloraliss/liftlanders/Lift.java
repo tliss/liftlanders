@@ -6,25 +6,35 @@ import com.badlogic.gdx.scenes.scene2d.Action;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 
-import static com.tayloraliss.liftlanders.Lift.location.*;
-import static com.tayloraliss.liftlanders.Lift.row.*;
+import static com.tayloraliss.liftlanders.Lift.Location.*;
+import static com.tayloraliss.liftlanders.Lift.Row.*;
 
 public class Lift extends BaseActor {
 
-    enum location {LEFT, RIGHT, NONE}
-    enum row {TOP, MIDDLE, BOTTOM, NONE}
-    location location;
-    row row;
+    public enum Location {LEFT, RIGHT}
 
-    Action moveUp = Actions.moveBy(0, 100, 1);
-    Action moveDown = Actions.moveBy(0, -100, 1);
+    public enum Row { TOP, MIDDLE, BOTTOM;
+        private static Row[] vals = values();
+        public Row below(){
+            return vals[(this.ordinal()+1)];
+        }
+        public Row above(){
+            return vals[(this.ordinal()-1)];
+        }
+    }
 
-    public Lift(float x, float y, Stage s, location l, row r)
+    private Location Location;
+    private Row Row;
+
+    private Action moveUp = Actions.moveBy(0, 100, 1);
+    private Action moveDown = Actions.moveBy(0, -100, 1);
+
+    public Lift(float x, float y, Stage s, Location l, Row r)
     {
         super(x,y,s);
         loadTexture("lift.png");
-        location = l;
-        row = r;
+        Location = l;
+        Row = r;
     }
 
     public void act(float dt)
@@ -34,43 +44,28 @@ public class Lift extends BaseActor {
 
         if (this.getActions().size == 0) {
             if (Gdx.input.isKeyJustPressed(Input.Keys.LEFT)) {
-                if (location == LEFT && (row == TOP || row == MIDDLE)) {
-                    this.addAction(moveDown);
-                    if (row == TOP) {
-                        row = MIDDLE;
-                    } else if (row == MIDDLE) {
-                        row = BOTTOM;
-                    }
-                }
-                if (location == RIGHT && (row == BOTTOM || row == MIDDLE)) {
+                // Left moves the left lift UP
+                if (Location == LEFT && (Row == BOTTOM || Row == MIDDLE)) {
                     this.addAction(moveUp);
-                    if (row == BOTTOM) {
-                        row = MIDDLE;
-                    } else if (row == MIDDLE) {
-                        row = TOP;
-                    }
+                    Row = Row.above();
+                }
+                // Left moves the right lift DOWN
+                if (Location == RIGHT && (Row == TOP || Row == MIDDLE)) {
+                    this.addAction(moveDown);
+                    Row = Row.below();
                 }
             }
             if (Gdx.input.isKeyJustPressed(Input.Keys.RIGHT)) {
-
-                if (location == RIGHT && (row == TOP || row == MIDDLE)) {
-                    this.addAction(moveDown);
-                    if (row == TOP) {
-                        row = MIDDLE;
-                    } else if (row == MIDDLE) {
-                        row = BOTTOM;
-                    }
-                }
-                if (location == LEFT && (row == BOTTOM || row == MIDDLE)) {
+                // Right moves the right lift UP
+                if (Location == RIGHT && (Row == BOTTOM || Row == MIDDLE)) {
                     this.addAction(moveUp);
-                    if (row == BOTTOM) {
-                        row = MIDDLE;
-                    } else if (row == MIDDLE) {
-                        row = TOP;
-                    }
+                    Row = Row.above();
                 }
-            }
-            if (Gdx.input.isKeyJustPressed(Input.Keys.UP)) {
+                // Right moves the left lift DOWN
+                if (Location == LEFT && (Row == TOP || Row == MIDDLE)) {
+                    this.addAction(moveDown);
+                    Row = Row.below();
+                }
             }
         }
     }

@@ -1,10 +1,9 @@
 package com.tayloraliss.liftlanders;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.utils.compression.lzma.Base;
 
-import static com.tayloraliss.liftlanders.Lift.location.*;
-import static com.tayloraliss.liftlanders.Lift.row.*;
+import static com.tayloraliss.liftlanders.Lift.Location.*;
+import static com.tayloraliss.liftlanders.Lift.Row.*;
 
 public class LiftLanders extends GameBeta {
 
