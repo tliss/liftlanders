@@ -20,12 +20,10 @@ public class LiftLanders extends GameBeta {
 
 	public void initialize(){
 		// Initialize actors here
-		greenbot = new GreenBot(340, 600, mainStage);
-		platform = new Platform(0, 0, mainStage);
-		platform.setPosition(platform.getX(), platform.getY() + 300);
-		System.out.println(Gdx.graphics.getWidth());
-		System.out.println(platform.getWidth());
-
+		greenbot = new GreenBot(Gdx.graphics.getWidth()/2, 500, mainStage);
+		greenbot.moveBy(-greenbot.getWidth()/2,0);
+		platform = new Platform(Gdx.graphics.getWidth()/2, Gdx.graphics.getHeight()/2, mainStage);
+		platform.moveBy(-platform.getWidth()/2, -platform.getHeight()/2);
 	}
 
 	public void update(float dt){
