@@ -3,6 +3,9 @@ package com.tayloraliss.liftlanders;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.utils.compression.lzma.Base;
 
+import static com.tayloraliss.liftlanders.Lift.location.*;
+import static com.tayloraliss.liftlanders.Lift.row.*;
+
 public class LiftLanders extends GameBeta {
 
 	// Declare actors here
@@ -28,8 +31,8 @@ public class LiftLanders extends GameBeta {
 			}
 		}
 
-		liftLeft = new Lift(PLATFORM_WIDTH, 400, mainStage);
-		liftRight = new Lift(PLATFORM_WIDTH * 3, 200, mainStage);
+		liftLeft = new Lift(PLATFORM_WIDTH, 400, mainStage, LEFT, TOP);
+		liftRight = new Lift(PLATFORM_WIDTH * 3, 200, mainStage, RIGHT, BOTTOM);
 
 	}
 
