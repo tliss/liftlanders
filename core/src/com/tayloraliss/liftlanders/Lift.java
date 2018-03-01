@@ -87,9 +87,7 @@ public class Lift extends BaseActor {
                 }
                 // Left moves the right lift DOWN
                 if (location == RIGHT && (Row == TOP || Row == MIDDLE)) {
-                    System.out.println(this.getActions().size);
                     this.addAction(moveDown);
-                    System.out.println(this.getActions().size);
                     Row = Row.below();
                 }
             }
