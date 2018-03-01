@@ -32,6 +32,7 @@ public class BaseActor extends Actor
     private Polygon boundaryPolygon;
     private boolean leftFacing;
     protected int gravity;
+    private boolean isSolid;
 
     public BaseActor(float x, float y, Group g)
     {
@@ -50,7 +51,10 @@ public class BaseActor extends Actor
         deceleration = 0;
         leftFacing = false;
         gravity = 700;
+        isSolid = true;
     }
+
+
 
     public BaseActor(float x, float y, Stage s)
     {
@@ -69,9 +73,16 @@ public class BaseActor extends Actor
         deceleration = 0;
         leftFacing = false;
         gravity = 700;
+        isSolid = true;
     }
 
+    public boolean isSolid() {
+        return isSolid;
+    }
 
+    public void setSolid(boolean solid) {
+        isSolid = solid;
+    }
 
     public void setAnimation(Animation<TextureRegion> anim){
         animation = anim;
