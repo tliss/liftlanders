@@ -373,5 +373,9 @@ public class BaseActor extends Actor
         return getList(stage, className).size();
     }
 
+    public boolean isInAction(){
+        return !(this.getActions().size == 0);
+    }
+
 }
 
