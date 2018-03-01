@@ -8,8 +8,8 @@ import com.tayloraliss.liftlanders.LiftLanders;
 public class DesktopLauncher {
 	public static void main (String[] arg) {
 
-		Config.write();
-		Config.parse();
+//		Config.write();
+//		Config.parse();
 
 		Game myGame = new LiftLanders();
 		LwjglApplication launcher = new LwjglApplication(myGame, "Lift Landers", 1274, 600);
