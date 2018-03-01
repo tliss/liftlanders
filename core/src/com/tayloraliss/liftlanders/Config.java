@@ -5,9 +5,12 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+
+import javax.imageio.ImageIO;
 
 class Entity {
     public Integer width;
@@ -17,14 +20,19 @@ class Entity {
 
 public abstract class Config {
 
+    private static int height;
+    private static int width;
 
 
     public static void write(){
 
+        getHeightWidth();
+
+
         Entity lift = new Entity();
-        lift.width = 184;
-        lift.height = 20;
-        lift.name = "lifter";
+        lift.width = width;
+        lift.height = height;
+        lift.name = "lift";
 
         ObjectMapper mapper = new ObjectMapper();
 
@@ -46,5 +54,16 @@ public abstract class Config {
             ex.printStackTrace();
         }
 
+    }
+
+    private static void getHeightWidth(){
+        try {
+            File f = new File("lift.png");
+            BufferedImage image = ImageIO.read(f);
+            height = image.getHeight();
+            width = image.getWidth();
+        } catch (IOException ioe) {
+            ioe.printStackTrace();
+        }
     }
 }
