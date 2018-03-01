@@ -47,12 +47,14 @@ public class Lift extends BaseActor {
     private void switchPosition() {
 
         Action moveRight = Actions.moveBy(LiftLanders.PLATFORM_WIDTH * 4, 0, 1);
+        Action moveLeft = Actions.moveBy(-LiftLanders.PLATFORM_WIDTH * 4, 0, 1);
         Action twirl = Actions.rotateBy(540, 1);
         Action grow = Actions.scaleBy(2, 2, 0.5f);
         Action shrink = Actions.scaleBy(-2, -2, 0.5f);
         SequenceAction growAndShrink = sequence(grow, shrink);
 
-        ParallelAction fancyMove = new ParallelAction(moveRight, twirl, growAndShrink);
+        ParallelAction fancyMoveRight = new ParallelAction(moveRight, twirl, growAndShrink);
+        ParallelAction fancyMoveLeft = new ParallelAction(moveLeft, twirl, growAndShrink);
 
         Action solidify = new Action(){
             @Override
@@ -62,10 +64,15 @@ public class Lift extends BaseActor {
             }
         };
 
-        if (!isInAction() && this.location == LEFT){
-            if (this.getActions().size == 0) {
+        if (!isInAction()) {
+            if (this.location == LEFT) {
                 this.setSolid(false);
-                this.addAction(sequence(fancyMove, solidify));
+                this.addAction(sequence(fancyMoveRight, solidify));
+                this.location = RIGHT;
+            } else if (this.location == RIGHT) {
+                this.setSolid(false);
+                this.addAction(sequence(fancyMoveLeft, solidify));
+                this.location = LEFT;
             }
         }
     }
@@ -80,24 +87,20 @@ public class Lift extends BaseActor {
 
         if (!isInAction()) {
             if (Gdx.input.isKeyJustPressed(Input.Keys.LEFT)) {
-                // Left moves the left lift UP
                 if (location == LEFT && (Row == BOTTOM || Row == MIDDLE)) {
                     this.addAction(moveUp);
                     Row = Row.above();
                 }
-                // Left moves the right lift DOWN
                 if (location == RIGHT && (Row == TOP || Row == MIDDLE)) {
                     this.addAction(moveDown);
                     Row = Row.below();
                 }
             }
             if (Gdx.input.isKeyJustPressed(Input.Keys.RIGHT)) {
-                // Right moves the right lift UP
                 if (location == RIGHT && (Row == BOTTOM || Row == MIDDLE)) {
                     this.addAction(moveUp);
                     Row = Row.above();
                 }
-                // Right moves the left lift DOWN
                 if (location == LEFT && (Row == TOP || Row == MIDDLE)) {
                     this.addAction(moveDown);
                     Row = Row.below();
