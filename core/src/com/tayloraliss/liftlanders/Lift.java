@@ -47,13 +47,18 @@ public class Lift extends BaseActor {
 
         Action moveRight = Actions.moveBy(LiftLanders.PLATFORM_WIDTH * 4, 0, 1);
         Action moveLeft = Actions.moveBy(-LiftLanders.PLATFORM_WIDTH * 4, 0, 1);
-        Action twirl = Actions.rotateBy(540, 1);
-        Action grow = Actions.scaleBy(2, 2, 0.5f);
-        Action shrink = Actions.scaleBy(-2, -2, 0.5f);
-        SequenceAction growAndShrink = sequence(grow, shrink);
+        Action twirlClockwise = Actions.rotateBy(720, 1);
+        Action twirlCounterclockwise = Actions.rotateBy(-720, 1);
+        Action grow = Actions.scaleBy(0.5f, 0.5f, 0.5f);
+        Action shrink = Actions.scaleBy(-0.5f, -0.5f, 0.5f);
+        Action moveUp = Actions.moveBy(0, 100, 0.5f);
+        Action moveDown = Actions.moveBy(0, -100, 0.5f);
 
-        ParallelAction fancyMoveRight = new ParallelAction(moveRight, twirl, growAndShrink);
-        ParallelAction fancyMoveLeft = new ParallelAction(moveLeft, twirl, growAndShrink);
+        SequenceAction shrinkAndGrow = sequence(shrink, grow);
+        SequenceAction moveUpAndDown = sequence(moveUp, moveDown);
+
+        ParallelAction fancyMoveRight = new ParallelAction(moveRight, twirlClockwise, shrinkAndGrow, moveUpAndDown);
+        ParallelAction fancyMoveLeft = new ParallelAction(moveLeft, twirlCounterclockwise, shrinkAndGrow, moveUpAndDown);
 
         Action solidify = new Action(){
             @Override

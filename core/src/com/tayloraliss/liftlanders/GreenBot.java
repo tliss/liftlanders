@@ -37,20 +37,7 @@ public class GreenBot extends BaseActor {
         }
 
         if (Gdx.input.isKeyPressed(Input.Keys.DOWN)) {
-
-            //---Not working correctly--
-
-            Vector2 cp[] = new Vector2[]{
-                    new Vector2(4,2.5f),
-                    new Vector2(1, 1),
-                    new Vector2(3, 1),
-                    new Vector2(4, 2.5f)
-            };
-            MoveAlongAction action1 = MoveAlongAction.obtain(new CatmullRomSpline<Vector2>(cp, true));
-            this.addAction(action1);
-
-            //--------------------------
-
+            accelerateAtAngle(270);
         }
 
         accelerationVec.add(0, -gravity);
