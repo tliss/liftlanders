@@ -2,18 +2,12 @@ package com.tayloraliss.liftlanders;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
-import com.badlogic.gdx.math.CatmullRomSpline;
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Action;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
-import com.badlogic.gdx.scenes.scene2d.actions.AfterAction;
 import com.badlogic.gdx.scenes.scene2d.actions.ParallelAction;
-import com.badlogic.gdx.scenes.scene2d.actions.RepeatAction;
-import com.badlogic.gdx.scenes.scene2d.actions.RunnableAction;
 import com.badlogic.gdx.scenes.scene2d.actions.SequenceAction;
 
-import static com.badlogic.gdx.scenes.scene2d.actions.Actions.moveTo;
 import static com.badlogic.gdx.scenes.scene2d.actions.Actions.sequence;
 import static com.tayloraliss.liftlanders.Lift.Location.*;
 import static com.tayloraliss.liftlanders.Lift.Row.*;
@@ -110,7 +104,6 @@ public class Lift extends BaseActor {
                     Row = Row.below();
                 }
             }
-            // Up switches the platforms
             if (Gdx.input.isKeyJustPressed(Input.Keys.UP)) {
                  switchPosition();
             }
