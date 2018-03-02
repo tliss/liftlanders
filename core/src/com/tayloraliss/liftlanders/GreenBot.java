@@ -11,8 +11,8 @@ public class GreenBot extends BaseActor {
     public GreenBot(float x, float y, Stage s)
     {
         super(x,y,s);
-        loadAnimationFromSheet("greenbot.png", 4, 7, 0.1f, false, true, 9, 12);
-        setScale(2, 2);
+        loadAnimationFromSheet("onion.png", 1, 6, 0.15f, true, false, 0, 6);
+//        setScale(1, .125f);
 
         setAcceleration(1000);
         setMaxSpeed(100);
@@ -25,11 +25,11 @@ public class GreenBot extends BaseActor {
 
         if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
             accelerateAtAngle(180);
-            setScaleX(-2);
+            setScaleX(1);
         }
         if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
             accelerateAtAngle(0);
-            setScaleX(2);
+            setScaleX(-1);
 
         }
         if (Gdx.input.isKeyPressed(Input.Keys.UP)) {
