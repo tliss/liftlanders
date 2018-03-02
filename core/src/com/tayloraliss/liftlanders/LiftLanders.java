@@ -18,8 +18,8 @@ public class LiftLanders extends GameBeta {
 	public void initialize(){
 		// Initialize actors here
 
-		new Lift(PLATFORM_WIDTH, 400, mainStage, LEFT, TOP);
-		new Lift(PLATFORM_WIDTH * 3, 200, mainStage, RIGHT, BOTTOM);
+		new Lift(PLATFORM_WIDTH, 400, mainStage, LEFT, TOP, false);
+		new Lift(PLATFORM_WIDTH * 3, 200, mainStage, RIGHT, BOTTOM, true);
 
 		greenbot = new GreenBot(Gdx.graphics.getWidth()/2, 500, mainStage);
 		greenbot.moveBy(-greenbot.getWidth()/2,0);

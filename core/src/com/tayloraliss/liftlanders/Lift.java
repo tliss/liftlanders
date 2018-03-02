@@ -14,6 +14,10 @@ import static com.tayloraliss.liftlanders.Lift.Row.*;
 
 public class Lift extends BaseActor {
 
+    private Location location;
+    private Row row;
+    private Boolean isCenter;
+
     public enum Location {LEFT, RIGHT}
 
     public enum Row { TOP, MIDDLE, BOTTOM;
@@ -26,15 +30,13 @@ public class Lift extends BaseActor {
         }
     }
 
-    private Location location;
-    private Row Row;
-
-    public Lift(float x, float y, Stage s, Location l, Row r)
+    public Lift(float x, float y, Stage s, Location l, Row r, Boolean center)
     {
         super(x,y,s);
         loadTexture("lift.png");
         location = l;
-        Row = r;
+        row = r;
+        isCenter = center;
     }
 
     private void switchPosition() {
@@ -62,17 +64,31 @@ public class Lift extends BaseActor {
             }
         };
 
+
+        //TODO: Prevent center platform from moving while other platform is
         if (!isInAction()) {
-            if (this.location == LEFT) {
+            if (this.location == LEFT && !isCenter) {
                 this.setSolid(false);
                 this.addAction(sequence(fancyMoveRight, solidify));
                 this.location = RIGHT;
-            } else if (this.location == RIGHT) {
+            } else if (this.location == RIGHT && !isCenter) {
                 this.setSolid(false);
                 this.addAction(sequence(fancyMoveLeft, solidify));
                 this.location = LEFT;
+            } else if (isCenter && this.location == LEFT){
+                this.location = RIGHT;
+            } else if (isCenter && this.location == RIGHT){
+                this.location = LEFT;
             }
         }
+    }
+
+    private boolean roomAbove(){
+        return (row == BOTTOM || row == MIDDLE);
+    }
+
+    private boolean roomBelow(){
+        return (row == TOP || row == MIDDLE);
     }
 
     public void act(float dt)
@@ -85,23 +101,23 @@ public class Lift extends BaseActor {
 
         if (!isInAction()) {
             if (Gdx.input.isKeyJustPressed(Input.Keys.LEFT)) {
-                if (location == LEFT && (Row == BOTTOM || Row == MIDDLE)) {
+                if (location == LEFT && roomAbove()) {
                     this.addAction(moveUp);
-                    Row = Row.above();
+                    row = row.above();
                 }
-                if (location == RIGHT && (Row == TOP || Row == MIDDLE)) {
+                if (location == RIGHT && roomBelow()) {
                     this.addAction(moveDown);
-                    Row = Row.below();
+                    row = row.below();
                 }
             }
             if (Gdx.input.isKeyJustPressed(Input.Keys.RIGHT)) {
-                if (location == RIGHT && (Row == BOTTOM || Row == MIDDLE)) {
+                if (location == RIGHT && roomAbove()) {
                     this.addAction(moveUp);
-                    Row = Row.above();
+                    row = row.above();
                 }
-                if (location == LEFT && (Row == TOP || Row == MIDDLE)) {
+                if (location == LEFT && roomBelow()) {
                     this.addAction(moveDown);
-                    Row = Row.below();
+                    row = row.below();
                 }
             }
             if (Gdx.input.isKeyJustPressed(Input.Keys.UP)) {
