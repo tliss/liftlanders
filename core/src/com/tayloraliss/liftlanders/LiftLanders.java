@@ -1,6 +1,7 @@
 package com.tayloraliss.liftlanders;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.utils.Array;
 
 import static com.tayloraliss.liftlanders.Lift.Location.*;
 import static com.tayloraliss.liftlanders.Lift.Row.*;
@@ -18,8 +19,8 @@ public class LiftLanders extends GameBeta {
 	public void initialize(){
 		// Initialize actors here
 
-		new Lift(PLATFORM_WIDTH, 400, mainStage, LEFT, TOP, false);
-		new Lift(PLATFORM_WIDTH * 3, 200, mainStage, RIGHT, BOTTOM, true);
+		new Lift(PLATFORM_WIDTH, 400, mainStage, LEFT, TOP, false).setName("flipper");
+		new Lift(PLATFORM_WIDTH * 3, 200, mainStage, RIGHT, BOTTOM, true).setName("center");
 
 		greenbot = new GreenBot(Gdx.graphics.getWidth()/2, 500, mainStage);
 		greenbot.moveBy(-greenbot.getWidth()/2,0);

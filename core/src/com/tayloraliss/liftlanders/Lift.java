@@ -17,6 +17,7 @@ public class Lift extends BaseActor {
     private Location location;
     private Row row;
     private Boolean isCenter;
+    private Boolean isFlipping;
 
     public enum Location {LEFT, RIGHT}
 
@@ -37,6 +38,11 @@ public class Lift extends BaseActor {
         location = l;
         row = r;
         isCenter = center;
+        isFlipping = false;
+    }
+
+    public Boolean getCenter() {
+        return isCenter;
     }
 
     private void switchPosition() {
@@ -60,6 +66,7 @@ public class Lift extends BaseActor {
             @Override
             public boolean act(float delta) {
                 Lift.this.setSolid(true);
+                Lift.this.isFlipping = false;
                 return true;
             }
         };
@@ -67,6 +74,7 @@ public class Lift extends BaseActor {
 
         //TODO: Prevent center platform from moving while other platform is
         if (!isInAction()) {
+            isFlipping = true;
             if (this.location == LEFT && !isCenter) {
                 this.setSolid(false);
                 this.addAction(sequence(fancyMoveRight, solidify));
@@ -99,6 +107,9 @@ public class Lift extends BaseActor {
         Action moveUp = Actions.moveBy(0, 100, 1);
         Action moveDown = Actions.moveBy(0, -100, 1);
 
+        Lift center = this.getStage().getRoot().findActor("center");
+        Lift flipper = this.getStage().getRoot().findActor("flipper");
+
         if (!isInAction()) {
             if (Gdx.input.isKeyJustPressed(Input.Keys.LEFT)) {
                 if (location == LEFT && roomAbove()) {
@@ -124,5 +135,10 @@ public class Lift extends BaseActor {
                  switchPosition();
             }
         }
+
+        if (flipper.isFlipping){
+            center.clearActions();
+        }
+
     }
 }
