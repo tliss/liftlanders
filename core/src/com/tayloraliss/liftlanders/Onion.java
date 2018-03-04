@@ -2,17 +2,14 @@ package com.tayloraliss.liftlanders;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
-import com.badlogic.gdx.math.CatmullRomSpline;
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 
-public class GreenBot extends BaseActor {
+public class Onion extends BaseActor {
 
-    public GreenBot(float x, float y, Stage s)
+    public Onion(float x, float y, Stage s)
     {
         super(x,y,s);
         loadAnimationFromSheet("onion.png", 1, 6, 0.15f, true, false, 0, 6);
-//        setScale(1, .125f);
 
         setAcceleration(1000);
         setMaxSpeed(100);

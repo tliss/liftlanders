@@ -31,13 +31,12 @@ public class Lift extends BaseActor {
         }
     }
 
-    public Lift(float x, float y, Stage s, Location l, Row r, Boolean center)
+    public Lift(float x, float y, Stage s, Location l, Row r)
     {
         super(x,y,s);
         loadTexture("lift.png");
         location = l;
         row = r;
-        isCenter = center;
         isFlipping = false;
     }
 
@@ -74,12 +73,13 @@ public class Lift extends BaseActor {
 
         //TODO: Prevent center platform from moving while other platform is
         if (!isInAction()) {
+            System.out.println(this.getName());
             isFlipping = true;
-            if (this.location == LEFT && !isCenter) {
+            if (this.location == LEFT && this.getName().equals("center")) {
                 this.setSolid(false);
                 this.addAction(sequence(fancyMoveRight, solidify));
                 this.location = RIGHT;
-            } else if (this.location == RIGHT && !isCenter) {
+            } else if (this.location == RIGHT && this.getName().equals("center")) {
                 this.setSolid(false);
                 this.addAction(sequence(fancyMoveLeft, solidify));
                 this.location = LEFT;
