@@ -40,10 +40,6 @@ public class Lift extends BaseActor {
         isFlipping = false;
     }
 
-    public Boolean getCenter() {
-        return isCenter;
-    }
-
     private void switchPosition() {
 
         Action moveRight = Actions.moveBy(LiftLanders.PLATFORM_WIDTH * 4, 0, 1);
