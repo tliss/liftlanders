@@ -16,7 +16,6 @@ public class Lift extends BaseActor {
 
     private Location location;
     private Row row;
-    private Boolean isCenter;
     private Boolean isFlipping;
 
     public enum Location {LEFT, RIGHT}
@@ -71,17 +70,17 @@ public class Lift extends BaseActor {
         if (!isInAction()) {
             System.out.println(this.getName());
             isFlipping = true;
-            if (this.location == LEFT && this.getName().equals("center")) {
+            if (this.location == LEFT && this.getName().equals("flipper")) {
                 this.setSolid(false);
                 this.addAction(sequence(fancyMoveRight, solidify));
                 this.location = RIGHT;
-            } else if (this.location == RIGHT && this.getName().equals("center")) {
+            } else if (this.location == RIGHT && this.getName().equals("flipper")) {
                 this.setSolid(false);
                 this.addAction(sequence(fancyMoveLeft, solidify));
                 this.location = LEFT;
-            } else if (isCenter && this.location == LEFT){
+            } else if (this.location == LEFT && this.getName().equals("center")){
                 this.location = RIGHT;
-            } else if (isCenter && this.location == RIGHT){
+            } else if (this.location == RIGHT && this.getName().equals("center")){
                 this.location = LEFT;
             }
         }
